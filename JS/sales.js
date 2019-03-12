@@ -98,55 +98,123 @@ Use template literals to render JS to webpage
 
 */
 
-//This method will render everything
-Business.prototype.render = function(id){
-  var nextUl = document.getElementById(id);
-  var titleLi = document.createElement('ul');
-  titleLi.textContent = this.location;
-  nextUl.appendChild(titleLi);
+// //This method will render everything as a list
+// Business.prototype.render = function(id){
+//   var nextUl = document.getElementById(id);
+//   var titleLi = document.createElement('ul');
+//   titleLi.textContent = this.location;
+//   nextUl.appendChild(titleLi);
 
-  for(var k = 0; k < this.hoursOfOperation.length; k++){
-    var nextLi = document.createElement('li');
-    var avgCookies = this.avgSalesPerHour[k];
-    var time = this.hoursOfOperation[k];
-    nextLi.textContent = `${this.hoursOfOperation[k]}: ${this.avgSalesPerHour[k]} cookies`;
+//   for(var k = 0; k < this.hoursOfOperation.length; k++){
+//     var nextLi = document.createElement('li');
+//     var avgCookies = this.avgSalesPerHour[k];
+//     var time = this.hoursOfOperation[k];
+//     nextLi.textContent = `${this.hoursOfOperation[k]}: ${this.avgSalesPerHour[k]} cookies`;
 
-    nextUl.appendChild(nextLi);
-  }
-  var totalLi = document.createElement('li');
-  totalLi.textContent = `Total Cookies: ${this.totalSales()}`;
-  nextUl.appendChild(totalLi);
-};
+//     nextUl.appendChild(nextLi);
+//   }
+//   var totalLi = document.createElement('li');
+//   totalLi.textContent = `Total Cookies: ${this.totalSales()}`;
+//   nextUl.appendChild(totalLi);
+// };
 
 
 //Initialize Page
 var pike = new Business('1st and Pike', 23, 65, 6.3, hoursOfOperation, [], []);
 pike.listEverything();
-pike.render('pike');
+// pike.render('pike');
 
 var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2, hoursOfOperation, [], []);
 seatacAirport.listEverything();
-seatacAirport.render('seatacAirport');
+// seatacAirport.render('seatacAirport');
 
 var seattleCenter = new Business('Seattle Center', 11, 38, 3.7, hoursOfOperation, [], []);
 seattleCenter.listEverything();
-seattleCenter.render('seattleCenter');
+// seattleCenter.render('seattleCenter');
 
 var capHill = new Business('Capitol Hill', 20, 38, 2.3, hoursOfOperation, [], []);
 capHill.listEverything();
-capHill.render('capHill');
+// capHill.render('capHill');
 
 var alki = new Business('Alki', 23, 65, 6.3, hoursOfOperation, [], []);
 alki.listEverything();
-alki.render('alki');
+// alki.render('alki');
 
 
 
 /*
 
 MAKING A TABLE 
+<table>
+  <tr>
+    <td></td>
+    <td></td>
+    .
+    .
+    .
+  </tr>
+</table>
+
+Make a table following the format below. Example:
+
+        6AM   7AM   8AM
+Pike    10    30    1000
+SeaTac  14    47    2
 
 */
+
+//Create a table element ("parent")
+var tableEl = document.getElementById('salesTable');
+
+//Header follows different format compared to the rest of the table
+//This code will render the header
+function buildHeader() {
+  var header_tr = document.createElement('tr');
+  var blankSpace = document.createElement('td');
+  blankSpace.textContent = '';
+  header_tr.appendChild(blankSpace);
+  for(var l = 0; l < hoursOfOperation.length; l++){
+    var nextHeader_td = document.createElement('td');
+    nextHeader_td.textContent = hoursOfOperation[l];
+    header_tr.appendChild(nextHeader_td);
+  }
+  var total_td = document.createElement('td');
+  total_td.textContent = 'Daily Location Total';
+  header_tr.appendChild(total_td);
+  tableEl.appendChild(header_tr);
+}
+
+
+//This method will add data ('td') to the rows ('tr')
+Business.prototype.addData = function(next_tr, location, totalSales) {
+  var title_td = document.createElement('td');
+  title_td.textContent = location;
+  next_tr.appendChild(title_td);
+  for(var m = 0; m < this.hoursOfOperation.length; m++){
+    var next_td = document.createElement('td');
+    next_td.textContent = this.avgSalesPerHour[m];
+    next_tr.appendChild(next_td);
+  }
+  var sumCookies = document.createElement('td');
+  sumCookies.textContent = totalSales;
+  next_tr.appendChild(sumCookies);
+};
+
+// //This method will add rows ('tr') to the table ('salesTable') and render the information
+Business.prototype.addRow = function() {
+  var location = this.location;
+  var sumCookies = this.totalSales();
+  var next_tr = document.createElement('tr');
+  this.addData(next_tr, location, sumCookies);
+  tableEl.appendChild(next_tr);
+};
+
+buildHeader();
+pike.addRow();
+seatacAirport.addRow();
+seattleCenter.addRow();
+capHill.addRow();
+alki.addRow();
 
 
 

@@ -28,100 +28,46 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//Create object for 1st & Pike store
-var pike = {
-  location: '1st and Pike',
-  minNumCustomers: 23,
-  maxNumCustomers: 65,
-  avgCookiePerCustomer: 6.3,
-  hoursOfOperation: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  numCustomersArray: [],
-  avgSalesPerHour: [],
-  
-  numCustomers: calcNumCustomers,
-  avgSales: calcAvgSales,
-  totalSales: calcTotalCookies,
-  listEverything: calcEverything,
-  render: renderResultsToPage,
-};
+//Global variable
+var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-//Create object for SeaTac Airport store
-var seatacAirport = {
-  location: 'SeaTac Airport',
-  minNumCustomers: 3,
-  maxNumCustomers: 24,
-  avgCookiePerCustomer: 1.2,
-  hoursOfOperation: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  numCustomersArray: [],
-  avgSalesPerHour: [],
-  
-  numCustomers: calcNumCustomers,
-  avgSales: calcAvgSales,
-  totalSales: calcTotalCookies,
-  listEverything: calcEverything,
-  render: renderResultsToPage,
-};
+//Create constructor function
+function Business(location, min, max, avgCookie, hours, numCustomers, avgSales) {
+  this.location = location;
+  this.minNumCustomers = min;
+  this.maxNumCustomers = max;
+  this.avgCookiePerCustomer = avgCookie;
+  this.hoursOfOperation = hours;
+  this.numCustomersArray = numCustomers;
+  this.avgSalesPerHour = avgSales;
+}
 
-//Create object for Seattle Center store
-var seattleCenter = {
-  location: 'Seattle Center',
-  minNumCustomers: 11,
-  maxNumCustomers: 38,
-  avgCookiePerCustomer: 3.7,
-  hoursOfOperation: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  numCustomersArray: [],
-  avgSalesPerHour: [],
-  
-  numCustomers: calcNumCustomers,
-  avgSales: calcAvgSales,
-  totalSales: calcTotalCookies,
-  listEverything: calcEverything,
-  render: renderResultsToPage,
-};
-
-//Create object for Capitol Hill store
-var capHill = {
-  location: 'Capitol Hill',
-  minNumCustomers: 20,
-  maxNumCustomers: 38,
-  avgCookiePerCustomer: 2.3,
-  hoursOfOperation: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  numCustomersArray: [],
-  avgSalesPerHour: [],
-  
-  numCustomers: calcNumCustomers,
-  avgSales: calcAvgSales,
-  totalSales: calcTotalCookies,
-  listEverything: calcEverything,
-  render: renderResultsToPage,
-};
-
-//Create object for Alki store
-var alki = {
-  location: 'Alki',
-  minNumCustomers: 20,
-  maxNumCustomers: 38,
-  avgCookiePerCustomer: 2.3,
-  hoursOfOperation: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
-  numCustomersArray: [],
-  avgSalesPerHour: [],
-  
-  numCustomers: calcNumCustomers,
-  avgSales: calcAvgSales,
-  totalSales: calcTotalCookies,
-  listEverything: calcEverything,
-  render: renderResultsToPage,
-};
-
-//Create function to calculate # of customers
-function calcNumCustomers() {
+//Create methods for constructors
+//This method will calculate random number of customers per hour
+Business.prototype.numCustomers = function(){
   var randomNumCustomers = getRandomIntInclusive(this.minNumCustomers, this.maxNumCustomers);
   // console.log('random number is: ' + randomNumCustomers);
   return randomNumCustomers;
-}
+};
 
-//Create function to calculate everything (#customers, #sales)
-function calcEverything() {
+//This method will calculate avg sales per hours
+//avgSalesPerHour = avgCookiePerCustomer * numCustomersArray[i]
+Business.prototype.avgSales = function(index){
+  var avgCookiesPerCustomerPerHour = Math.floor(this.avgCookiePerCustomer * this.numCustomersArray[index]);
+  return avgCookiesPerCustomerPerHour;
+};
+
+//This method will calculate total # cookies
+Business.prototype.totalSales = function(){
+  var totalCookies = 0;
+  for(var j = 0; j < this.avgSalesPerHour.length; j++){
+    totalCookies = totalCookies + this.avgSalesPerHour[j];
+  }
+  return totalCookies;
+};
+
+//This method will create a list for everything
+Business.prototype.listEverything = function(){
   console.log(`${this.location} Results`);
   for(var i = 0; i < this.hoursOfOperation.length; i++){
     this.numCustomersArray.push(this.numCustomers());
@@ -131,23 +77,7 @@ function calcEverything() {
   }
   // console.log('Total Cookies: ' + this.totalSales());
   console.log(`Total Cookies: ${this.totalSales()}`);
-
-}
-
-//Create a function to calculate average sales per hour ----> avgSalesPerHour = avgCookiePerCustomer * numCustomersArray[i]
-function calcAvgSales(index) {
-  var avgCookiesPerCustomerPerHour = Math.floor(this.avgCookiePerCustomer * this.numCustomersArray[index]);
-  return avgCookiesPerCustomerPerHour;
-}
-
-//Create a function to calculate total # of cookies sold
-function calcTotalCookies() {
-  var totalCookies = 0;
-  for(var j = 0; j < this.avgSalesPerHour.length; j++){
-    totalCookies = totalCookies + this.avgSalesPerHour[j];
-  }
-  return totalCookies;
-}
+};
 
 /*
 Render information about 1st store onto webpage
@@ -168,8 +98,8 @@ Use template literals to render JS to webpage
 
 */
 
-//Create function to render results on page in a listed format
-function renderResultsToPage(id) {
+//This method will render everything
+Business.prototype.render = function(id){
   var nextUl = document.getElementById(id);
   var titleLi = document.createElement('ul');
   titleLi.textContent = this.location;
@@ -186,23 +116,37 @@ function renderResultsToPage(id) {
   var totalLi = document.createElement('li');
   totalLi.textContent = `Total Cookies: ${this.totalSales()}`;
   nextUl.appendChild(totalLi);
-}
+};
+
 
 //Initialize Page
+var pike = new Business('1st and Pike', 23, 65, 6.3, hoursOfOperation, [], []);
 pike.listEverything();
 pike.render('pike');
 
+var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2, hoursOfOperation, [], []);
 seatacAirport.listEverything();
 seatacAirport.render('seatacAirport');
 
+var seattleCenter = new Business('Seattle Center', 11, 38, 3.7, hoursOfOperation, [], []);
 seattleCenter.listEverything();
 seattleCenter.render('seattleCenter');
 
+var capHill = new Business('Capitol Hill', 20, 38, 2.3, hoursOfOperation, [], []);
 capHill.listEverything();
 capHill.render('capHill');
 
+var alki = new Business('Alki', 23, 65, 6.3, hoursOfOperation, [], []);
 alki.listEverything();
 alki.render('alki');
+
+
+
+/*
+
+MAKING A TABLE 
+
+*/
 
 
 

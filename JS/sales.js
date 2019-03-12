@@ -66,7 +66,7 @@ Business.prototype.totalSales = function(){
   return totalCookies;
 };
 
-//This method will create a list for everything
+//This method will solve for everything
 Business.prototype.listEverything = function(){
   console.log(`${this.location} Results`);
   for(var i = 0; i < this.hoursOfOperation.length; i++){
@@ -78,69 +78,6 @@ Business.prototype.listEverything = function(){
   // console.log('Total Cookies: ' + this.totalSales());
   console.log(`Total Cookies: ${this.totalSales()}`);
 };
-
-/*
-Render information about 1st store onto webpage
-
-1. get the parent
-2. make new element
-3. give it information
-4. render onto page
-
-Display as unordered list. Example:
-
-1st and Pike
--6AM: 16 cookies
--7AM: 20 cookies
--8AM: 35 cookies
-
-Use template literals to render JS to webpage
-
-*/
-
-// //This method will render everything as a list
-// Business.prototype.render = function(id){
-//   var nextUl = document.getElementById(id);
-//   var titleLi = document.createElement('ul');
-//   titleLi.textContent = this.location;
-//   nextUl.appendChild(titleLi);
-
-//   for(var k = 0; k < this.hoursOfOperation.length; k++){
-//     var nextLi = document.createElement('li');
-//     var avgCookies = this.avgSalesPerHour[k];
-//     var time = this.hoursOfOperation[k];
-//     nextLi.textContent = `${this.hoursOfOperation[k]}: ${this.avgSalesPerHour[k]} cookies`;
-
-//     nextUl.appendChild(nextLi);
-//   }
-//   var totalLi = document.createElement('li');
-//   totalLi.textContent = `Total Cookies: ${this.totalSales()}`;
-//   nextUl.appendChild(totalLi);
-// };
-
-
-//Initialize Page
-var pike = new Business('1st and Pike', 23, 65, 6.3, hoursOfOperation, [], []);
-pike.listEverything();
-// pike.render('pike');
-
-var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2, hoursOfOperation, [], []);
-seatacAirport.listEverything();
-// seatacAirport.render('seatacAirport');
-
-var seattleCenter = new Business('Seattle Center', 11, 38, 3.7, hoursOfOperation, [], []);
-seattleCenter.listEverything();
-// seattleCenter.render('seattleCenter');
-
-var capHill = new Business('Capitol Hill', 20, 38, 2.3, hoursOfOperation, [], []);
-capHill.listEverything();
-// capHill.render('capHill');
-
-var alki = new Business('Alki', 23, 65, 6.3, hoursOfOperation, [], []);
-alki.listEverything();
-// alki.render('alki');
-
-
 
 /*
 
@@ -167,7 +104,7 @@ SeaTac  14    47    2
 var tableEl = document.getElementById('salesTable');
 
 //Header follows different format compared to the rest of the table
-//This code will render the header
+//This function will render the header
 function buildHeader() {
   var header_tr = document.createElement('tr');
   var blankSpace = document.createElement('td');
@@ -209,12 +146,60 @@ Business.prototype.addRow = function() {
   tableEl.appendChild(next_tr);
 };
 
+//Initialize Page
+var pike = new Business('1st and Pike', 23, 65, 6.3, hoursOfOperation, [], []);
+pike.listEverything();
+
+var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2, hoursOfOperation, [], []);
+seatacAirport.listEverything();
+
+var seattleCenter = new Business('Seattle Center', 11, 38, 3.7, hoursOfOperation, [], []);
+seattleCenter.listEverything();
+
+var capHill = new Business('Capitol Hill', 20, 38, 2.3, hoursOfOperation, [], []);
+capHill.listEverything();
+
+var alki = new Business('Alki', 23, 65, 6.3, hoursOfOperation, [], []);
+alki.listEverything();
+
+//This function will calculate the hourly total betwwen all stores
+var hourlyTotalArray = [];
+function totalPerHour() {
+  var sum = 0;
+  for(var n = 0; n < hoursOfOperation.length; n++){
+    sum = pike.avgSalesPerHour[n] + seatacAirport.avgSalesPerHour[n] + seattleCenter.avgSalesPerHour[n] + capHill.avgSalesPerHour[n] + alki.avgSalesPerHour[n];
+    hourlyTotalArray.push(sum);
+  }
+}
+totalPerHour();
+
+//Calculate daily total between all stores
+var dailyTotal = pike.totalSales() + seatacAirport.totalSales() + seattleCenter.totalSales() + capHill.totalSales() + alki.totalSales();
+
+
+//Footer follows different format compared to the rest of the table
+//This function will render the footer
+function buildFooter() {
+  var footer_tr = document.createElement('tr');
+  var footer_td = document.createElement('td');
+  footer_td.textContent = 'Total';
+  footer_tr.appendChild(footer_td);
+  for(var q = 0; q < hoursOfOperation.length; q++){
+    var nextFooter_td = document.createElement('td');
+    nextFooter_td.textContent = hourlyTotalArray[q];
+    footer_tr.appendChild(nextFooter_td);
+  }
+  var dailyTotal_td = document.createElement('td');
+  dailyTotal_td.textContent = dailyTotal;
+  footer_tr.appendChild(dailyTotal_td);
+  tableEl.appendChild(footer_tr);
+}
+
+//Build Table
 buildHeader();
 pike.addRow();
 seatacAirport.addRow();
 seattleCenter.addRow();
 capHill.addRow();
 alki.addRow();
-
-
-
+buildFooter();

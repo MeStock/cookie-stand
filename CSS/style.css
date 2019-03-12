@@ -5,8 +5,7 @@ img {
     border: 2px salmon solid;
     box-shadow: 10px 10px 10px salmon;
     border-radius: 15px;
-    align-items: center;
-
+    margin-left: 300px;
 }
 
 body{
@@ -17,7 +16,6 @@ p {
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: brown;
     text-align: center;
-    margin-left: -80px;
 }
 
 h1 {
@@ -28,11 +26,14 @@ h1 {
     color: rgb(211, 181, 144);
     text-align: center;
 }
-h2 {
+h2, h3 {
     font-family: 'Questrial', sans-serif;
     font-display: auto;
     color: rgb(211, 181, 144);
     text-align: center;
+}
+a {
+    color: rgb(211, 181, 144);
 }
 
 ul{
@@ -50,14 +51,14 @@ ul{
     margin-left: 10px;
 }
 
-ul[id = "capHill"] {
+/* ul[id = "capHill"] {
     margin-left: 140px;
     margin-right: 70px;
 }
 ul[id = "alki"] {
     margin-left: 70x;
     
-}
+} */
 
 li {
     color: salmon;

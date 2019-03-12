@@ -25,8 +25,7 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//Create objects for 1st store
-
+//Create object for 1st store
 var pike = {
   location: '1st and Pike',
   minNumCustomers: 23,
@@ -40,6 +39,7 @@ var pike = {
   avgSales: calcAvgSales,
   totalSales: calcTotalCookies,
   listEverything: calcEverything,
+  render: renderResultsToPage,
 };
 
 //Create function to calculate # of customers
@@ -49,6 +49,7 @@ function calcNumCustomers() {
   return randomNumCustomers;
 }
 
+//Create function to calculate everything (#customers, #sales)
 function calcEverything() {
   for(var i = 0; i < this.hoursOfOperation.length; i++){
     this.numCustomersArray.push(this.numCustomers());
@@ -57,8 +58,6 @@ function calcEverything() {
   }
   console.log('Total Cookies: ' + this.totalSales());
 }
-
-
 
 //Create a function to calculate average sales per hour ----> avgSalesPerHour = avgCookiePerCustomer * numCustomersArray[i]
 function calcAvgSales(index) {
@@ -75,5 +74,45 @@ function calcTotalCookies() {
   return totalCookies;
 }
 
+/*
+Render information about 1st store onto webpage
+
+1. get the parent
+2. make new element
+3. give it information
+4. render onto page
+
+Display as unordered list. Example:
+
+1st and Pike
+-6AM: 16 cookies
+-7AM: 20 cookies
+-8AM: 35 cookies
+
+Use template literals to render JS to webpage
+
+*/
+
+//Create function to render results on page in a listed format
+function renderResultsToPage(id) {
+  var nextUl = document.getElementById(id);
+  var titleLi = document.createElement('ul');
+  titleLi.textContent = this.location;
+  nextUl.appendChild(titleLi);
+
+  for(var k = 0; k < this.hoursOfOperation.length; k++){
+    var nextLi = document.createElement('li');
+    var avgCookies = this.avgSalesPerHour[k];
+    var time = this.hoursOfOperation[k];
+    nextLi.textContent = `${this.hoursOfOperation[k]}: ${this.avgSalesPerHour[k]} cookies`;
+
+    nextUl.appendChild(nextLi);
+  }
+  var totalLi = document.createElement('li');
+  totalLi.textContent = 'Total Cookies: ' + this.totalSales();
+  nextUl.appendChild(totalLi);
+}
+
 //Initialize Page
 pike.listEverything();
+pike.render('pike');

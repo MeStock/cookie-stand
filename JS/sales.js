@@ -30,6 +30,7 @@ function getRandomIntInclusive(min, max) {
 
 //Global variable
 var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+var businessesArray = []; 
 
 //Create constructor function
 function Business(location, min, max, avgCookie, hours, numCustomers, avgSales) {
@@ -79,6 +80,29 @@ Business.prototype.listEverything = function(){
   console.log(`Total Cookies: ${this.totalSales()}`);
 };
 
+//This function will calculate & store the results from hourly totals in an array
+var hourlyTotalArray = [];
+function totalPerHour() {
+  //this loop will store the result of each hour, for 14 hours
+  for(var n = 0; n < hoursOfOperation.length; n++){
+    var sum = 0;
+    //this loop will add up the cookies at each hour
+    for(var i in businessesArray){
+      sum = sum + businessesArray[i].avgSalesPerHour[n];
+    }
+    hourlyTotalArray.push(sum);
+  }
+}
+
+//Calculate daily total between all stores
+function dailyTotal() {
+  var dailyTotal = 0;
+  for( var i in businessesArray){
+    dailyTotal = dailyTotal + businessesArray[i].totalSales();
+  }
+  return dailyTotal;
+}
+
 /*
 
 MAKING A TABLE 
@@ -100,7 +124,7 @@ SeaTac  14    47    2
 
 */
 
-//Create a table element ("parent")
+//Reference a table element ("parent")
 var tableEl = document.getElementById('salesTable');
 
 //Header follows different format compared to the rest of the table
@@ -121,8 +145,7 @@ function buildHeader() {
   tableEl.appendChild(header_tr);
 }
 
-
-//This method will add data ('td') to the rows ('tr')
+//This method will add data ('td - child to row') to the rows ('tr - parent to data')
 Business.prototype.addData = function(next_tr, location, totalSales) {
   var title_td = document.createElement('td');
   title_td.textContent = location;
@@ -137,7 +160,7 @@ Business.prototype.addData = function(next_tr, location, totalSales) {
   next_tr.appendChild(sumCookies);
 };
 
-// //This method will add rows ('tr') to the table ('salesTable') and render the information
+// //This method will add rows ('tr - child to table') to the table ('salesTable') and render the information
 Business.prototype.addRow = function() {
   var location = this.location;
   var sumCookies = this.totalSales();
@@ -145,37 +168,6 @@ Business.prototype.addRow = function() {
   this.addData(next_tr, location, sumCookies);
   tableEl.appendChild(next_tr);
 };
-
-//Initialize Page
-var pike = new Business('1st and Pike', 23, 65, 6.3, hoursOfOperation, [], []);
-pike.listEverything();
-
-var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2, hoursOfOperation, [], []);
-seatacAirport.listEverything();
-
-var seattleCenter = new Business('Seattle Center', 11, 38, 3.7, hoursOfOperation, [], []);
-seattleCenter.listEverything();
-
-var capHill = new Business('Capitol Hill', 20, 38, 2.3, hoursOfOperation, [], []);
-capHill.listEverything();
-
-var alki = new Business('Alki', 23, 65, 6.3, hoursOfOperation, [], []);
-alki.listEverything();
-
-//This function will calculate the hourly total betwwen all stores
-var hourlyTotalArray = [];
-function totalPerHour() {
-  var sum = 0;
-  for(var n = 0; n < hoursOfOperation.length; n++){
-    sum = pike.avgSalesPerHour[n] + seatacAirport.avgSalesPerHour[n] + seattleCenter.avgSalesPerHour[n] + capHill.avgSalesPerHour[n] + alki.avgSalesPerHour[n];
-    hourlyTotalArray.push(sum);
-  }
-}
-totalPerHour();
-
-//Calculate daily total between all stores
-var dailyTotal = pike.totalSales() + seatacAirport.totalSales() + seattleCenter.totalSales() + capHill.totalSales() + alki.totalSales();
-
 
 //Footer follows different format compared to the rest of the table
 //This function will render the footer
@@ -190,16 +182,44 @@ function buildFooter() {
     footer_tr.appendChild(nextFooter_td);
   }
   var dailyTotal_td = document.createElement('td');
-  dailyTotal_td.textContent = dailyTotal;
+  dailyTotal_td.textContent = dailyTotal();
   footer_tr.appendChild(dailyTotal_td);
   tableEl.appendChild(footer_tr);
 }
 
+/* =========================Initialize Page============================================ */
+
+//Create businesses
+var pike = new Business('1st and Pike', 23, 65, 6.3, hoursOfOperation, [], []);
+businessesArray.push(pike);
+
+var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2, hoursOfOperation, [], []);
+businessesArray.push(seatacAirport);
+
+var seattleCenter = new Business('Seattle Center', 11, 38, 3.7, hoursOfOperation, [], []);
+businessesArray.push(seattleCenter);
+
+var capHill = new Business('Capitol Hill', 20, 38, 2.3, hoursOfOperation, [], []);
+businessesArray.push(capHill);
+
+var alki = new Business('Alki', 23, 65, 6.3, hoursOfOperation, [], []);
+businessesArray.push(alki);
+
+//Calculate results from each businesses & list them
+//Results from the following questions:
+//random # of customers
+//avg sales per hour based on random # of customers
+//daily total for each store
+for(var m = 0; m < businessesArray.length; m++){
+  businessesArray[m].listEverything();
+}
+
+//Calculate total of cookies sold each hour between all stores
+totalPerHour();
+
 //Build Table
 buildHeader();
-pike.addRow();
-seatacAirport.addRow();
-seattleCenter.addRow();
-capHill.addRow();
-alki.addRow();
+for(var p = 0; p < businessesArray.length; p++){
+  businessesArray[p].addRow();
+}
 buildFooter();

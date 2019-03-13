@@ -146,7 +146,7 @@ function buildHeader() {
     header_tr.appendChild(nextHeader_td);
   }
   var total_td = document.createElement('td');
-  total_td.textContent = 'Daily Location Total';
+  total_td.textContent = 'Daily Total';
   header_tr.appendChild(total_td);
   tableEl.appendChild(header_tr);
 }

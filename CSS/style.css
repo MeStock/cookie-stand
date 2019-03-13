@@ -39,8 +39,8 @@ form {
     margin-top: 50px;
 }
 
-input {
-    display: inline-block;
+label {
+    display: block;
 }
 
 table {

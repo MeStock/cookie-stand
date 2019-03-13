@@ -30,7 +30,13 @@ function getRandomIntInclusive(min, max) {
 
 //Global variable
 var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
-var businessesArray = []; 
+var businessesArray = [
+  new Business('1st and Pike', 23, 65, 6.3),
+  new Business('SeaTac Airport', 3, 24, 1.2),
+  new Business('Seattle Center', 11, 38, 3.7),
+  new Business('Capitol Hill', 20, 38, 2.3),
+  new Business('Alki', 23, 65, 6.3)
+]; 
 
 //Create constructor function
 function Business(location, min, max, avgCookie) {
@@ -68,7 +74,7 @@ Business.prototype.totalSales = function(){
 };
 
 //This method will solve for everything
-Business.prototype.listEverything = function(){
+Business.prototype.calcEverything = function(){
   // console.log(`${this.location} Results`);
   for(var i = 0; i < hoursOfOperation.length; i++){
     this.numCustomersArray.push(this.numCustomers());
@@ -172,6 +178,7 @@ Business.prototype.addRow = function() {
 //Footer follows different format compared to the rest of the table
 //This function will render the footer
 function buildFooter() {
+  totalPerHour();
   var footer_tr = document.createElement('tr');
   var footer_td = document.createElement('td');
   footer_td.textContent = 'Total';
@@ -230,41 +237,20 @@ function buildNewBusiness(event){
 
   businessesArray.push(newStore);
   tableEl.innerHTML= '';
-  newStore.listEverything();
-  totalPerHour();
+  newStore.calcEverything();
   buildTable();
 }
 newBusinessForm.addEventListener('submit', buildNewBusiness);
 
 /* =========================Initialize Page============================================ */
 
-//Create businesses
-var pike = new Business('1st and Pike', 23, 65, 6.3);
-businessesArray.push(pike);
-
-var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2);
-businessesArray.push(seatacAirport);
-
-var seattleCenter = new Business('Seattle Center', 11, 38, 3.7);
-businessesArray.push(seattleCenter);
-
-var capHill = new Business('Capitol Hill', 20, 38, 2.3);
-businessesArray.push(capHill);
-
-var alki = new Business('Alki', 23, 65, 6.3);
-businessesArray.push(alki);
-
-//Calculate results from each businesses & list them
-//Results from the following questions:
-//random # of customers
-//avg sales per hour based on random # of customers
-//daily total for each store
+//Calculate results from each businesses
+// 1. Results from the following questions:
+// 2. random # of customers
+// 3. avg sales per hour based on random # of customers
 for(var m = 0; m < businessesArray.length; m++){
-  businessesArray[m].listEverything();
+  businessesArray[m].calcEverything();
 }
 
-//Calculate total of cookies sold each hour between all stores
-totalPerHour();
-
-//Build Table
+//Build table & display on page
 buildTable();

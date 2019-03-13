@@ -9,10 +9,28 @@
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <p>
-        <h3><h3><a href="index.html">Home</a> | Other links TBD</h3></h3>
-    </p>
+    <form id = "buildNewStore">
+        <fieldset>
+            <legend>Build a New Store!</legend>
+
+            <label for = "storeName">Location Name?</label>
+            <input type = "text" name = "storeName">
+
+            <label for = "minNumCust">Minimum Number of Customers?</label>
+            <input type = "text" name = "minNumCust">
+
+            <label for = "maxNumCust">Maximum Number of Customers?</label>
+            <input type = "text" name = "maxNumCust">
+
+            <label for = "avgPerCust">Average Number of Cookies per Customer?</label>
+            <input type = "text" name = "avgPerCust">
+            <input type = "submit">
+        </fieldset>
+    </form>
+
     <table id = salesTable></table>
+
+    <p><h3><h3><a href="index.html">Home</a> | Other links TBD</h3></h3></p>
 
     <script src = "JS/sales.js"></script>
 </body>

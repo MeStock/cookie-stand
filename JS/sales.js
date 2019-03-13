@@ -33,14 +33,14 @@ var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm
 var businessesArray = []; 
 
 //Create constructor function
-function Business(location, min, max, avgCookie, hours, numCustomers, avgSales) {
+function Business(location, min, max, avgCookie) {
   this.location = location;
   this.minNumCustomers = min;
   this.maxNumCustomers = max;
   this.avgCookiePerCustomer = avgCookie;
-  this.hoursOfOperation = hours;
-  this.numCustomersArray = numCustomers;
-  this.avgSalesPerHour = avgSales;
+
+  this.numCustomersArray = [];
+  this.avgSalesPerHour = [];
 }
 
 //Create methods for constructors
@@ -69,20 +69,20 @@ Business.prototype.totalSales = function(){
 
 //This method will solve for everything
 Business.prototype.listEverything = function(){
-  console.log(`${this.location} Results`);
-  for(var i = 0; i < this.hoursOfOperation.length; i++){
+  // console.log(`${this.location} Results`);
+  for(var i = 0; i < hoursOfOperation.length; i++){
     this.numCustomersArray.push(this.numCustomers());
     this.avgSalesPerHour.push(this.avgSales(i));
-    console.log(`${this.hoursOfOperation[i]}: ${this.avgSalesPerHour[i]} cookies`);
+    // console.log(`${hoursOfOperation[i]}: ${this.avgSalesPerHour[i]} cookies`);
 
   }
-  // console.log('Total Cookies: ' + this.totalSales());
-  console.log(`Total Cookies: ${this.totalSales()}`);
+  // console.log(`Total Cookies: ${this.totalSales()}`);
 };
 
 //This function will calculate & store the results from hourly totals in an array
-var hourlyTotalArray = [];
+var hourlyTotalArray;
 function totalPerHour() {
+  hourlyTotalArray = [];
   //this loop will store the result of each hour, for 14 hours
   for(var n = 0; n < hoursOfOperation.length; n++){
     var sum = 0;
@@ -150,7 +150,7 @@ Business.prototype.addData = function(next_tr, location, totalSales) {
   var title_td = document.createElement('td');
   title_td.textContent = location;
   next_tr.appendChild(title_td);
-  for(var m = 0; m < this.hoursOfOperation.length; m++){
+  for(var m = 0; m < hoursOfOperation.length; m++){
     var next_td = document.createElement('td');
     next_td.textContent = this.avgSalesPerHour[m];
     next_tr.appendChild(next_td);
@@ -187,22 +187,71 @@ function buildFooter() {
   tableEl.appendChild(footer_tr);
 }
 
+//This function will build a table
+function buildTable(){
+  buildHeader();
+  //this loop builds all the rows in between
+  for(var p = 0; p < businessesArray.length; p++){
+    businessesArray[p].addRow();
+  }
+  buildFooter();
+}
+
+/* Create a form to build a new location
+
+Inputs:
+1. Location name
+2 Min # of customers
+3. Max # of customers
+4. Average cookies bought per customer
+
+//Reference form
+//Create function for event
+  1.preventdefault
+  2.collect user input: <event>.target.<name>.value
+  3.use constuctor funtion to build new variable
+//Add event listener
+
+*/
+
+//Reference form
+var newBusinessForm = document.getElementById('buildNewStore');
+
+function buildNewBusiness(event){
+  event.preventDefault();
+
+  //Collect user input
+  var location = event.target.storeName.value;
+  var min = event.target.minNumCust.value;
+  var max = Number(event.target.maxNumCust.value);
+  var avg = Number(event.target.avgPerCust.value);
+
+  var newStore = new Business(location, min, max, avg);
+
+  businessesArray.push(newStore);
+  tableEl.innerHTML= '';
+  newStore.listEverything();
+  totalPerHour();
+  buildTable();
+}
+newBusinessForm.addEventListener('submit', buildNewBusiness);
+
 /* =========================Initialize Page============================================ */
 
 //Create businesses
-var pike = new Business('1st and Pike', 23, 65, 6.3, hoursOfOperation, [], []);
+var pike = new Business('1st and Pike', 23, 65, 6.3);
 businessesArray.push(pike);
 
-var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2, hoursOfOperation, [], []);
+var seatacAirport = new Business('SeaTac Airport', 3, 24, 1.2);
 businessesArray.push(seatacAirport);
 
-var seattleCenter = new Business('Seattle Center', 11, 38, 3.7, hoursOfOperation, [], []);
+var seattleCenter = new Business('Seattle Center', 11, 38, 3.7);
 businessesArray.push(seattleCenter);
 
-var capHill = new Business('Capitol Hill', 20, 38, 2.3, hoursOfOperation, [], []);
+var capHill = new Business('Capitol Hill', 20, 38, 2.3);
 businessesArray.push(capHill);
 
-var alki = new Business('Alki', 23, 65, 6.3, hoursOfOperation, [], []);
+var alki = new Business('Alki', 23, 65, 6.3);
 businessesArray.push(alki);
 
 //Calculate results from each businesses & list them
@@ -218,8 +267,4 @@ for(var m = 0; m < businessesArray.length; m++){
 totalPerHour();
 
 //Build Table
-buildHeader();
-for(var p = 0; p < businessesArray.length; p++){
-  businessesArray[p].addRow();
-}
-buildFooter();
+buildTable();

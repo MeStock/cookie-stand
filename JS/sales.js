@@ -223,8 +223,8 @@ function buildNewBusiness(event){
   //Collect user input
   var location = event.target.storeName.value;
   var min = event.target.minNumCust.value;
-  var max = Number(event.target.maxNumCust.value);
-  var avg = Number(event.target.avgPerCust.value);
+  var max = event.target.maxNumCust.value;
+  var avg = event.target.avgPerCust.value;
 
   var newStore = new Business(location, min, max, avg);
 

@@ -138,7 +138,7 @@ var tableEl = document.getElementById('salesTable');
 function buildHeader() {
   var header_tr = document.createElement('tr');
   var blankSpace = document.createElement('td');
-  blankSpace.textContent = '';
+  blankSpace.textContent = 'Location';
   header_tr.appendChild(blankSpace);
   for(var l = 0; l < hoursOfOperation.length; l++){
     var nextHeader_td = document.createElement('td');

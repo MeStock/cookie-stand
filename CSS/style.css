@@ -129,6 +129,7 @@ article > ul li {
     border: 2px solid black;
     padding: 1px 1px;
     margin-left: 20px;
+    margin-bottom: 30px;
 }
 article > section {
     float: left;
@@ -136,7 +137,7 @@ article > section {
     padding: 10px 10px 10px 10px;
     text-align: center;
     background-color: rgba(97, 126, 97, 0.897);
-
+    margin-bottom: 40px;
 }
 #salmonpic {
     margin-left: 100px;
@@ -168,7 +169,8 @@ form button {
 
 table {
     border: 1px solid black;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 
     table-layout: fixed;
     font-family: Arial, Helvetica, sans-serif;
     text-align: right;
@@ -176,7 +178,7 @@ table {
     margin-bottom: 30px;
 }
 
-tr:first-child td {
+tr:first-child td{
     background-color: darkgreen;
     border-bottom: 2px solid black;
     font-weight: bolder;
@@ -192,11 +194,15 @@ tr:last-child {
     border-top: 2px solid #00000050;
 }
 
+td {
+    padding: 6px;
+}
+
 td:first-child{
     font-weight: bolder;
 }
 
-td:last-child{
+tr:not(:first-child) td:last-child{
     border-left: 2px solid #00000050;
     font-weight: bolder;
 }

@@ -1,40 +1,38 @@
-img {
+/* img {
     display: block;
-    height: 300px;
-    width: 800px;
-    border: 2px salmon solid;
-    box-shadow: 10px 10px 10px salmon;
+    border: 2px rgb(44, 66, 44) solid;
+    box-shadow: 10px 10px 10px rgb(44, 66, 44);
     border-radius: 15px;
     margin: auto;
 }
 
 body{
-    background-color: bisque;
+    background-color: rgb(132, 148, 132);
     text-align: center;
 }
 
 p {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    color: brown;
+    color: black;
     text-align: center;
 }
 
 h1 {
-    font-family: 'Questrial', sans-serif;
+    font-family: 'Chango', sans-serif;
     font-display: auto;
     font-size: 400%;
     font-weight: 400px;
-    color: rgb(211, 181, 144);
+    color: rgb(193, 218, 193);
     text-align: center;
 }
 h2, h3 {
     font-family: 'Questrial', sans-serif;
     font-display: auto;
-    color: rgb(211, 181, 144);
+    color: rgb(193, 218, 193);
     text-align: center;
 }
 a {
-    color: rgb(211, 181, 144);
+    color: rgb(193, 218, 193);
 }
 form {
     display: inline-block;
@@ -54,7 +52,7 @@ table {
 }
 
 tr:first-child {
-    background-color: salmon;
+    background-color: darkgreen;
     border-bottom: 2px solid black;
     font-weight: bolder;
     letter-spacing: 0.5px;
@@ -63,7 +61,7 @@ tr:first-child {
 }
 
 tr:nth-child(2n) {
-    background-color: rgb(211, 181, 144);
+    background-color: rgb(181, 194, 181);
 }
 
 tr:last-child {
@@ -80,4 +78,152 @@ td:last-child{
 }
 
 
+ */
 
+* {
+    box-sizing: border-box;
+    background-color: #ccd4cd;
+}
+main {
+    width: 960px;
+    margin: auto;
+    padding: 30px 0;
+}
+nav {
+     overflow: hidden;
+     width: 960px;
+     border: 2px solid black;
+     margin: auto;
+     margin-top: 30px;
+ }
+
+nav > ul li {
+     float: left;
+     text-align: center;
+     padding: 10px 10px 10px 130px;
+ }
+ a {
+    color: rgb(23, 71, 23);
+ }
+
+h1 {
+    font-family: 'Chango', sans-serif;
+    font-display: auto;
+    font-size: 400%;
+    font-weight: 400px;
+    color: rgb(23, 71, 23);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 2em;
+}
+article {
+    overflow: hidden;
+    margin: auto;
+}
+
+article > ul li {
+    float: left;
+    border: 2px solid black;
+    padding: 1px 1px;
+    margin-left: 20px;
+}
+article > section {
+    float: left;
+    width: 480px;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    background-color: rgba(97, 126, 97, 0.897);
+
+}
+#salmonpic {
+    margin-left: 100px;
+
+}
+
+form {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-left: 230px;
+    margin-bottom: 30px;
+    font-size: 0.8em;
+}
+fieldset {
+    background-color: none;
+    width: 500px;
+    border: 2px solid black;
+}
+legend {
+    font-family: Chango, sans-serif;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+form button {
+    margin-bottom: 10px;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+tr:first-child td {
+    background-color: darkgreen;
+    border-bottom: 2px solid black;
+    font-weight: bolder;
+    letter-spacing: 0.5px;
+    text-align: center;
+    opacity: 0.8;
+}
+tr:nth-child(2n) td{
+    background-color: rgb(181, 194, 181);
+}
+
+tr:last-child {
+    border-top: 2px solid #00000050;
+}
+
+td:first-child{
+    font-weight: bolder;
+}
+
+td:last-child{
+    border-left: 2px solid #00000050;
+    font-weight: bolder;
+}
+
+#chinookpic {
+    display: block;
+    border: 2px rgb(44, 66, 44) solid;
+    box-shadow: 10px 10px 10px rgb(44, 66, 44);
+    border-radius: 15px;
+    margin: auto;
+}
+
+#familypic {
+    width: 200px;
+    height: 200px;
+    border: 2px rgb(44, 66, 44) solid;
+    box-shadow: 10px 10px 10px rgb(44, 66, 44);
+    border-radius: 15px;
+    margin: auto;
+    margin-top: 5px;
+}
+
+#shirtpic {
+    width: 200px;
+    height: 200px;
+    border: 2px rgb(44, 66, 44) solid;
+    box-shadow: 10px 10px 10px rgb(44, 66, 44);
+    border-radius: 15px;
+    margin: auto;
+}

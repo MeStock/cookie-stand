@@ -140,6 +140,7 @@ function buildHeader() {
   var blankSpace = document.createElement('td');
   blankSpace.textContent = 'Location';
   header_tr.appendChild(blankSpace);
+  //this loop will add all table data ('td') to the header
   for(var l = 0; l < hoursOfOperation.length; l++){
     var nextHeader_td = document.createElement('td');
     nextHeader_td.textContent = hoursOfOperation[l];
@@ -156,6 +157,7 @@ Business.prototype.addData = function(next_tr, location, totalSales) {
   var title_td = document.createElement('td');
   title_td.textContent = location;
   next_tr.appendChild(title_td);
+  //this loop adds all the table data ('td') to each row
   for(var m = 0; m < hoursOfOperation.length; m++){
     var next_td = document.createElement('td');
     next_td.textContent = this.avgSalesPerHour[m];
@@ -183,6 +185,7 @@ function buildFooter() {
   var footer_td = document.createElement('td');
   footer_td.textContent = 'Total';
   footer_tr.appendChild(footer_td);
+  //This loop adds all the table data ('td') to the footer
   for(var q = 0; q < hoursOfOperation.length; q++){
     var nextFooter_td = document.createElement('td');
     nextFooter_td.textContent = hourlyTotalArray[q];
@@ -197,7 +200,7 @@ function buildFooter() {
 //This function will build a table
 function buildTable(){
   buildHeader();
-  //this loop builds all the rows in between
+  //this loop builds all the rows in between header & footer
   for(var p = 0; p < businessesArray.length; p++){
     businessesArray[p].addRow();
   }
